@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">FlyWillApp</string>
+    <string name="title_activity_authorized_map">Map</string>
+</resources>

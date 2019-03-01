@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "414176563469",
+    "firebase_url": "https://flywillapp-86622.firebaseio.com",
+    "project_id": "flywillapp-86622",
+    "storage_bucket": "flywillapp-86622.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414176563469:android:f42f814c8fed0084",
+        "android_client_info": {
+          "package_name": "com.example.flywillapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414176563469-e8fjj16d50dfte0e7vvlidp1uedn8iej.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flywillapp",
+            "certificate_hash": "ef2b980580c38a64150b6d00599fd682ec266a60"
+          }
+        },
+        {
+          "client_id": "414176563469-fste21jflhcsi85ofr8khbeqn31b3t76.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6JLmYmCpdkgBsiWMCSW_rVNpHxfhKpAM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "414176563469-fste21jflhcsi85ofr8khbeqn31b3t76.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

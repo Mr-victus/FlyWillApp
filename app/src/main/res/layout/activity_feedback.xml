@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".FeedbackActivity">
+    <Button
+        android:id="@+id/accept"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Path Cleared, please goahead !"
+        android:layout_marginTop="150dp"/>
+    <Button
+        android:id="@+id/reject"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sorry, path cannot cleared"/>
+
+    <Button
+        android:id="@+id/call"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Call"/>
+</LinearLayout>
