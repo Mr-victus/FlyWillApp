@@ -9,16 +9,23 @@
     android:orientation="vertical">
 
     <Button
+        android:id="@+id/Authorized"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Authorized"
-        android:layout_marginTop="400dp"
-        android:id="@+id/Authorized"/>
+        android:layout_marginTop="340dp"
+        android:text="Authorized" />
+
     <Button
+        android:id="@+id/Public"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Public"
-        android:id="@+id/Public"/>
+        android:text="Public" />
+
+    <Button
+        android:id="@+id/police"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Police" />
 
 
 </LinearLayout>

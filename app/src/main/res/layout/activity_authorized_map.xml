@@ -49,5 +49,12 @@
         android:id="@+id/request"
         android:layout_marginHorizontal="100dp"
         android:layout_gravity="bottom"/>
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="70dp"
+        android:text="Police"
+        android:id="@+id/police"
+        android:layout_marginHorizontal="120dp"
+        android:layout_gravity="top"/>
 
 </FrameLayout>

@@ -21,6 +21,7 @@
         <activity android:name=".FeedbackActivity"></activity>
         <activity android:name=".PublicMapActivity" />
         <activity android:name=".PublicSignupActivity" />
+        <activity android:name=".PoliceMapActivity" />
         <activity android:name=".AuthorizedSignupActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
@@ -46,6 +47,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".PoliceLoginActivity" />
+        <activity android:name=".PoliceSignUpActivity" />
+        <activity android:name=".FeedBackPoliceActivity"></activity>
     </application>
 
 </manifest>

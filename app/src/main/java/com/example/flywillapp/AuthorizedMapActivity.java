@@ -50,7 +50,7 @@ public class AuthorizedMapActivity extends FragmentActivity implements OnMapRead
     Marker marker;
     int c=1;
 
-    private Button mLogout,request;
+    private Button mLogout,request,police;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +135,31 @@ public class AuthorizedMapActivity extends FragmentActivity implements OnMapRead
 
             }
         });
+        DatabaseReference reference3=FirebaseDatabase.getInstance().getReference().child("Users").child("Police");
+        reference3.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot snapshot:dataSnapshot.getChildren())
+                {
+
+                    //Toast.makeText(PublicMapActivity.this,snapshot.child("lat").getValue().toString(),Toast.LENGTH_SHORT).show();
+
+                    LatLng latLng=new LatLng(Double.parseDouble(snapshot.child("lat").getValue().toString()),Double.parseDouble(snapshot.child("lon").getValue().toString()));
+
+                    mMap.addMarker(new MarkerOptions().position(latLng).title("Police "));
+
+
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 
 
         request=findViewById(R.id.request);
@@ -143,6 +168,20 @@ public class AuthorizedMapActivity extends FragmentActivity implements OnMapRead
             @Override
             public void onClick(View v) {
                 DatabaseReference reference=FirebaseDatabase.getInstance().getReference().child("requests").child(auth.getCurrentUser().getUid());
+                Map map=new HashMap();
+                map.put("msg","Please Clear the Path");
+                map.put("status","0");
+                reference.updateChildren(map);
+                Toast.makeText(AuthorizedMapActivity.this, "Notification Sent", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        police=findViewById(R.id.police);
+
+        police.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseReference reference=FirebaseDatabase.getInstance().getReference().child("requests to police").child(auth.getCurrentUser().getUid());
                 Map map=new HashMap();
                 map.put("msg","Please Clear the Path");
                 map.put("status","0");
@@ -167,6 +206,12 @@ public class AuthorizedMapActivity extends FragmentActivity implements OnMapRead
                         Toast.makeText(AuthorizedMapActivity.this, dataSnapshot.child("publicmsg").getValue().toString(), Toast.LENGTH_LONG).show();
 
                     }
+                    if(dataSnapshot.child("policemsg").getValue()!=null) {
+
+                        Toast.makeText(AuthorizedMapActivity.this, dataSnapshot.child("policemsg").getValue().toString(), Toast.LENGTH_LONG).show();
+
+                    }
+
 
             }
 

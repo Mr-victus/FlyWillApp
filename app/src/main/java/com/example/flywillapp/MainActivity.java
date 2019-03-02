@@ -7,13 +7,14 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
-    private Button mAuthorized,mPublic;
+    private Button mAuthorized,mPublic,police;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuthorized = (Button) findViewById(R.id.Authorized);
         mPublic = (Button) findViewById(R.id.Public);
+        police=findViewById(R.id.police);
         mAuthorized.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -31,6 +32,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
                 return;
+            }
+        });
+        police.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(MainActivity.this,PoliceLoginActivity.class);
+                startActivity(i);
+                finish();
             }
         });
     }
