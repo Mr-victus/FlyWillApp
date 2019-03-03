@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,6 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class FeedbackActivity extends AppCompatActivity {
+
+    FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +35,7 @@ public class FeedbackActivity extends AppCompatActivity {
         reject=findViewById(R.id.reject);
         call=findViewById(R.id.call);
 
+        auth=FirebaseAuth.getInstance();
 
         Intent i=getIntent();
         if(i!=null) {
@@ -40,46 +44,92 @@ public class FeedbackActivity extends AppCompatActivity {
             accept.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("Users").child("Authorized").child(aid);
 
-                    Map map=new HashMap();
+                    DatabaseReference reference=FirebaseDatabase.getInstance().getReference().child("Users").child("Authorized").child(aid);
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    map.put("publicmsg","Path Cleared, please goahead!");
-                    reference.updateChildren(map);
-                    Toast.makeText(FeedbackActivity.this, "Feedback Sent", Toast.LENGTH_SHORT).show();
+                            int count=Integer.parseInt(dataSnapshot.child("positive").getValue().toString());
 
-                    DatabaseReference reference1=FirebaseDatabase.getInstance().getReference().child("requests").child(aid);
-                    Map map1=new HashMap();
+                            count=count+1;
+                            DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("Users").child("Authorized").child(aid);
 
-                    map1.put("status","1");
-                    reference1.updateChildren(map1);
+                            Map map=new HashMap();
 
-                    Intent i=new Intent(FeedbackActivity.this,PublicMapActivity.class);
-                    startActivity(i);
-                    finish();
+                            map.put("publicmsg","Path Cleared, please goahead!");
+                            map.put("positive",count);
+                            reference.updateChildren(map);
+                            Toast.makeText(FeedbackActivity.this, "Feedback Sent", Toast.LENGTH_SHORT).show();
+
+
+
+
+                            DatabaseReference reference2=FirebaseDatabase.getInstance().getReference().child("Users").child("Public").child(auth.getCurrentUser().getUid()).child("status");
+                            Map map2=new HashMap();
+                            map2.put(aid,"1");
+                            reference2.updateChildren(map2);
+
+                            Intent i=new Intent(FeedbackActivity.this,PublicMapActivity.class);
+                            startActivity(i);
+                            finish();
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
                 }
             });
 
             reject.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("Users").child("Authorized").child(aid);
 
-                    Map map=new HashMap();
 
-                    map.put("publicmsg","Sorry, path cannot cleared");
-                    reference.updateChildren(map);
-                    Toast.makeText(FeedbackActivity.this, "Feedback Sent", Toast.LENGTH_SHORT).show();
 
-                    DatabaseReference reference1=FirebaseDatabase.getInstance().getReference().child("requests").child(aid);
-                    Map map1=new HashMap();
+                    DatabaseReference reference=FirebaseDatabase.getInstance().getReference().child("Users").child("Authorized").child(aid);
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    map1.put("status","2");
-                    reference1.updateChildren(map1);
 
-                    Intent i=new Intent(FeedbackActivity.this,PublicMapActivity.class);
-                    startActivity(i);
-                    finish();
+                            int count=Integer.parseInt(dataSnapshot.child("negative").getValue().toString());
+
+                            count=count+1;
+
+                            DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("Users").child("Authorized").child(aid);
+
+                            Map map=new HashMap();
+
+                            map.put("publicmsg","Sorry, path cannot cleared");
+                            map.put("negative",count);
+                            reference.updateChildren(map);
+                            Toast.makeText(FeedbackActivity.this, "Feedback Sent", Toast.LENGTH_SHORT).show();
+
+
+
+
+                            DatabaseReference reference2=FirebaseDatabase.getInstance().getReference().child("Users").child("Public").child(auth.getCurrentUser().getUid()).child("status");
+                            Map map2=new HashMap();
+                            map2.put(aid,"2");
+                            reference2.updateChildren(map2);
+
+                            Intent i=new Intent(FeedbackActivity.this,PublicMapActivity.class);
+                            startActivity(i);
+                            finish();
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
 
                 }
             });
@@ -96,11 +146,11 @@ public class FeedbackActivity extends AppCompatActivity {
                     map.put("publicmsg","Called You");
                     reference33.updateChildren(map);
 
-                    DatabaseReference reference1=FirebaseDatabase.getInstance().getReference().child("requests").child(aid);
-                    Map map1=new HashMap();
 
-                    map1.put("status","3");
-                    reference1.updateChildren(map1);
+                    DatabaseReference reference2=FirebaseDatabase.getInstance().getReference().child("Users").child("Public").child(auth.getCurrentUser().getUid()).child("status");
+                    Map map2=new HashMap();
+                    map2.put(aid,"3");
+                    reference2.updateChildren(map2);
                     DatabaseReference reference=FirebaseDatabase.getInstance().getReference().child("Users").child("Authorized").child(aid);
 
                     reference.addListenerForSingleValueEvent(new ValueEventListener() {

@@ -113,6 +113,7 @@ public class PoliceMapActivity extends FragmentActivity implements OnMapReadyCal
         reference2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mMap.clear();
                 for(DataSnapshot snapshot:dataSnapshot.getChildren())
                 {
 

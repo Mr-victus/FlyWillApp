@@ -113,6 +113,7 @@ public class PublicMapActivity extends FragmentActivity implements OnMapReadyCal
         reference2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mMap.clear();
                 for(DataSnapshot snapshot:dataSnapshot.getChildren())
                 {
 
@@ -136,33 +137,86 @@ public class PublicMapActivity extends FragmentActivity implements OnMapReadyCal
 
         feedback=findViewById(R.id.feedback);
 
-        DatabaseReference reference=FirebaseDatabase.getInstance().getReference().child("requests");
+
+        DatabaseReference reference=FirebaseDatabase.getInstance().getReference().child("Users").child("Public").child(auth.getCurrentUser().getUid()).child("status");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
-                for(final DataSnapshot snapshot:dataSnapshot.getChildren())
-                {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()) {
+                    for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        if (!snapshot.getValue().toString().equals("0")) {
+
+                            //Toast.makeText(PublicMapActivity.this, snapshot.child("msg").getValue().toString(), Toast.LENGTH_SHORT).show();
+                            feedback.setVisibility(View.INVISIBLE);
+
+                        } else {
+                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("requests");
+                            reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+                                    for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
 
+                                        if (snapshot.child("status").getValue().toString().equals("0")) {
 
+                                            Toast.makeText(PublicMapActivity.this, snapshot.child("msg").getValue().toString(), Toast.LENGTH_SHORT).show();
+                                            feedback.setVisibility(View.VISIBLE);
+                                            feedback.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
 
+                                                    Intent i = new Intent(PublicMapActivity.this, FeedbackActivity.class);
+                                                    i.putExtra("aid", snapshot.getKey());
+                                                    startActivity(i);
+                                                    finish();
 
-                    if(snapshot.child("status").getValue().toString().equals("0")) {
+                                                }
+                                            });
+                                        }
+                                    }
+                                }
 
-                        Toast.makeText(PublicMapActivity.this, snapshot.child("msg").getValue().toString(), Toast.LENGTH_SHORT).show();
-                        feedback.setVisibility(View.VISIBLE);
-                        feedback.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                                Intent i=new Intent(PublicMapActivity.this,FeedbackActivity.class);
-                                i.putExtra("aid",snapshot.getKey());
-                                startActivity(i);
-                                finish();
-
-                            }
-                        });
+                                }
+                            });
+                        }
                     }
+                }
+                else {
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("requests");
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+                            for (final DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
+
+                                if (snapshot.child("status").getValue().toString().equals("0")) {
+
+                                    Toast.makeText(PublicMapActivity.this, snapshot.child("msg").getValue().toString(), Toast.LENGTH_SHORT).show();
+                                    feedback.setVisibility(View.VISIBLE);
+                                    feedback.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+
+                                            Intent i = new Intent(PublicMapActivity.this, FeedbackActivity.class);
+                                            i.putExtra("aid", snapshot.getKey());
+                                            startActivity(i);
+                                            finish();
+
+                                        }
+                                    });
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
                 }
             }
 
@@ -171,6 +225,8 @@ public class PublicMapActivity extends FragmentActivity implements OnMapReadyCal
 
             }
         });
+
+
     }
     /*protected synchronized void buildGoogleApiClient(){
         mGoogleApiClient = new  GoogleApiClient.Builder(this)

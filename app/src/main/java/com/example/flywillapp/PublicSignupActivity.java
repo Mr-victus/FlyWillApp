@@ -49,7 +49,6 @@ public class PublicSignupActivity extends AppCompatActivity {
                         {
                             DatabaseReference reference= FirebaseDatabase.getInstance().getReference().child("Users").child("Public").child(auth.getCurrentUser().getUid());
                             Map map=new HashMap();
-                            map.put("status","true");
                             map.put("email",email.getText().toString());
 
                             reference.updateChildren(map);

@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.geofire.GeoFire;
@@ -46,6 +47,7 @@ public class AuthorizedMapActivity extends FragmentActivity implements OnMapRead
     Location mLastLocation;
     FirebaseAuth auth;
     LocationRequest mLocationRequest;
+    TextView p,n;
 
     Marker marker;
     int c=1;
@@ -61,6 +63,9 @@ public class AuthorizedMapActivity extends FragmentActivity implements OnMapRead
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         auth=FirebaseAuth.getInstance();
+
+        p=findViewById(R.id.positive);
+        n=findViewById(R.id.negative);
         mLogout = (Button)findViewById(R.id.logout);
         mLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +120,7 @@ public class AuthorizedMapActivity extends FragmentActivity implements OnMapRead
         reference2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mMap.clear();
                 for(DataSnapshot snapshot:dataSnapshot.getChildren())
                 {
 
@@ -139,6 +145,7 @@ public class AuthorizedMapActivity extends FragmentActivity implements OnMapRead
         reference3.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                mMap.clear();
                 for(DataSnapshot snapshot:dataSnapshot.getChildren())
                 {
 
@@ -172,6 +179,12 @@ public class AuthorizedMapActivity extends FragmentActivity implements OnMapRead
                 map.put("msg","Please Clear the Path");
                 map.put("status","0");
                 reference.updateChildren(map);
+
+                DatabaseReference reference1=FirebaseDatabase.getInstance().getReference().child("Users").child("Authorized").child(auth.getCurrentUser().getUid());
+                Map map1=new HashMap();
+                map1.put("positive","0");
+                map1.put("negative","0");
+                reference1.updateChildren(map1);
                 Toast.makeText(AuthorizedMapActivity.this, "Notification Sent", Toast.LENGTH_SHORT).show();
 
             }
@@ -197,18 +210,21 @@ public class AuthorizedMapActivity extends FragmentActivity implements OnMapRead
             @Override
             public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
 
+                p.setText("Positive :"+dataSnapshot.child("positive").getValue().toString());
+                n.setText("Negative :"+dataSnapshot.child("negative").getValue().toString());
+
 
 
 
 
                     if(dataSnapshot.child("publicmsg").getValue()!=null) {
 
-                        Toast.makeText(AuthorizedMapActivity.this, dataSnapshot.child("publicmsg").getValue().toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(AuthorizedMapActivity.this, "Public :"+dataSnapshot.child("publicmsg").getValue().toString(), Toast.LENGTH_LONG).show();
 
                     }
                     if(dataSnapshot.child("policemsg").getValue()!=null) {
 
-                        Toast.makeText(AuthorizedMapActivity.this, dataSnapshot.child("policemsg").getValue().toString(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(AuthorizedMapActivity.this, "Police :"+dataSnapshot.child("policemsg").getValue().toString(), Toast.LENGTH_LONG).show();
 
                     }
 

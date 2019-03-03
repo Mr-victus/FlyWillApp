@@ -12,30 +12,7 @@
         android:id="@+id/logout"
         android:text="LogOut"/>
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/relativeLayout1"
-        android:background="#fff">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="From"
-            android:layout_gravity="top"
-            android:layout_marginTop="100dp"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="To"
-            android:layout_marginTop="160dp"/>
-
-
-
-
-    </RelativeLayout>
-
-        <fragment
+    <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
@@ -56,5 +33,22 @@
         android:id="@+id/police"
         android:layout_marginHorizontal="120dp"
         android:layout_gravity="top"/>
+
+    <TextView
+        android:id="@+id/positive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:background="#ff00ff"
+        android:text="Positive :5" />
+    <TextView
+        android:id="@+id/negative"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end
+"
+        android:layout_marginTop="50dp"
+        android:background="#ff00ff"
+        android:text="Negative :5" />
 
 </FrameLayout>

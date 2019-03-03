@@ -55,6 +55,9 @@ public class AuthorizedSignupActivity extends AppCompatActivity {
                             map.put("email",email.getText().toString());
                             map.put("EID",eid.getText().toString());
                             map.put("phonenumber",phone.getText().toString());
+                            map.put("positive","0");
+                            map.put("negative","0");
+
 
 
                             reference.updateChildren(map);
